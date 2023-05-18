@@ -1,7 +1,4 @@
-#### Please note:
-
-- You will need to create a database and be able to run it locally.
-
+Deployed Url - http://ec2-3-12-165-88.us-east-2.compute.amazonaws.com/travelapi
 ## Project Setup
 
 1. Clone the project into your **XAMPP/xamppfiles/htdocs** directory.
