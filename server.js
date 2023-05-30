@@ -4,13 +4,12 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+const db = require("./app/models");
 
-// const db = require("./app/models");
-
-// db.sequelize.sync();
+db.sequelize.sync();
 
 var corsOptions = {
-  origin: "http://localhost:8081",
+  origin: "*",
 };
 
 app.use(cors(corsOptions));
@@ -27,9 +26,14 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Travel Itenary backend." });
 });
 
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
+require("./app/routes/itinerary.routes")(app);
+require("./app/routes/category.routes")(app);
+require("./app/routes/place.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
