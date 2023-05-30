@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const User = require("../controllers/user.controller.js");
-  const { authenticateRoute } = require("../authentication/authentication");
+  const { authenticateRoute } = require("../authentication/authentication.js");
   var router = require("express").Router();
 
   // Create a new User
@@ -21,5 +21,5 @@ module.exports = (app) => {
   // Delete all User
   router.delete("/users/", [authenticateRoute], User.deleteAll);
 
-  app.use("/recipeapi", router);
+  app.use(router);
 };
