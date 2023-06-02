@@ -40,7 +40,7 @@ db.itinerary.belongsTo(db.category, { foreignKey: 'category_id' });
 db.itinerary.hasMany(db.itineraryPlan, { foreignKey: 'itinerary_id' });
 db.place.hasMany(db.itineraryPlan, { foreignKey: 'place_id' });
 db.itinerary.hasMany(db.booking, { foreignKey: 'itinerary_id' });
-db.user.hasMany(db.booking, { foreignKey: 'itinerary_id' });
+db.user.hasMany(db.booking, { foreignKey: 'user_id' });
 
 db.itineraryImage.belongsTo(db.itineraryPlan, { foreignKey: 'plan_id' });
 
