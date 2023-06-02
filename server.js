@@ -30,8 +30,8 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/itinerary.routes")(app);
 require("./app/routes/place.routes")(app);
+require("./app/routes/category.routes")(app);
 require("./app/routes/booking.routes")(app);
-
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3200;
