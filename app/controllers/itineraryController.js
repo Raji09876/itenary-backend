@@ -7,6 +7,30 @@ const Op = db.Sequelize.Op;
 // Get all itineraries
 async function getAllItineraries(req, res) {
   try {
+    const { from, to, date_start, date_end, category } = req.query;
+    const filters = {
+      [Op.and]: [],
+    };
+    if (from) {
+      filters[Op.and].push({ from_place: { [Op.like]: `%${from}%` } });
+    }
+    if (to) {
+      filters[Op.and].push({ to_place: { [Op.like]: `%${to}%` } });
+    }
+    if (date_start) {
+      filters[Op.and].push({ start_date: sequelize.where(sequelize.fn('DATE', sequelize.col('start_date')), date_start) });
+    }
+    if (date_end) {
+      filters[Op.and].push({ end_date: sequelize.where(sequelize.fn('DATE', sequelize.col('end_date')), date_end) });
+    }
+    if (category) {
+      const filterCategory = {
+        [Op.or]: [
+          { category_id: category }
+        ],
+      };
+      filters[Op.and].push(filterCategory);
+    }
     const itineraries = await Itinerary.findAll();
     res.status(200).json(itineraries);
   } catch (error) {
@@ -21,7 +45,6 @@ async function getItineraryById(req, res) {
   try {
     const itinerary = await Itinerary.findByPk(itinerary_id, 
       {
-      // include: [ItineraryPlan, User]
       include: [ItineraryPlan]
     }
     );
@@ -38,19 +61,18 @@ async function getItineraryById(req, res) {
 
 // Create a new itinerary
 async function createItinerary(req, res) {
-  const { title, description, start_date, duration_days, max_capacity, rating, category_id, place_id, user_id,image_url } = req.body;
+  const { title, description, start_date, duration_days,end_date,rating, category_id,image_url,price } = req.body;
   try {
     const itinerary = await Itinerary.create({
       title,
       description,
       start_date,
       duration_days,
-      max_capacity,
       rating,
       category_id,
-      place_id,
-      user_id,
-      image_url
+      image_url,
+      end_date,
+      price
     });
     res.status(201).json({ message: 'Itinerary created successfully.', itinerary });
   } catch (error) {
@@ -62,7 +84,7 @@ async function createItinerary(req, res) {
 // Update itinerary by ID
 async function updateItinerary(req, res) {
   const { itinerary_id } = req.params;
-  const { title, description, start_date, duration_days, max_capacity, rating, category_id, place_id, user_id } = req.body;
+  const { title, description, start_date, duration_days,end_date,rating, category_id,image_url,price } = req.body;
   try {
     const itinerary = await Itinerary.findByPk(itinerary_id);
     if (itinerary) {
@@ -71,11 +93,11 @@ async function updateItinerary(req, res) {
         description,
         start_date,
         duration_days,
-        max_capacity,
         rating,
         category_id,
-        place_id,
-        user_id
+        image_url,
+        end_date,
+        price
       });
       res.status(200).json({ message: 'Itinerary updated successfully.' });
     } else {
