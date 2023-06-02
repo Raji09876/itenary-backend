@@ -26,6 +26,11 @@ module.exports =  (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      reviews:{
+        type: Sequelize.STRING,
+        allowNull: true,
+        default: 0,
+      },
     },
     {
      timestamps: true, 
