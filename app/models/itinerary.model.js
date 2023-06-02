@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     end_date: {
       type: Sequelize.DATE,
-      allowNull: false,
+      allowNull: true,
     },
     duration_days: {
       type: Sequelize.INTEGER,
