@@ -31,6 +31,14 @@ module.exports = (sequelize, Sequelize) => {
     price: {
       type: Sequelize.DECIMAL(10, 2),
     },
+    from_place: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    to_place: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     image_url: {
       type: Sequelize.STRING,
       allowNull: false,
