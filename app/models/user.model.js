@@ -22,6 +22,11 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BLOB,
       allowNull: false,
     },
+    admin_role:{
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      default: 0
+    }
   });
 
   return User;
